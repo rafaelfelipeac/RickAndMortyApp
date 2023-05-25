@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.rickandmortyapp.network.di
+package com.rafaelfelipeac.rickandmortyapp.core.network.di
 
 import dagger.Module
 import dagger.Provides

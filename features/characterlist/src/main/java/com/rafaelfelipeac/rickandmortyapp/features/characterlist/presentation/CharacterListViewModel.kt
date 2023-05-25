@@ -3,9 +3,9 @@ package com.rafaelfelipeac.rickandmortyapp.features.characterlist.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.domain.CharacterListInteractor
-import com.rafaelfelipeac.rickandmortyapp.network.RequestError
-import com.rafaelfelipeac.rickandmortyapp.network.RequestException
-import com.rafaelfelipeac.rickandmortyapp.network.RequestSuccess
+import com.rafaelfelipeac.rickandmortyapp.core.network.RequestError
+import com.rafaelfelipeac.rickandmortyapp.core.network.RequestException
+import com.rafaelfelipeac.rickandmortyapp.core.network.RequestSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

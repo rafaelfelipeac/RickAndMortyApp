@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.rickandmortyapp.network
+package com.rafaelfelipeac.rickandmortyapp.core.network
 
 import retrofit2.HttpException
 import retrofit2.Response

@@ -2,7 +2,7 @@ package com.rafaelfelipeac.characterdetail.domain
 
 import com.rafaelfelipeac.characterdetail.data.CharacterDetailRepository
 import com.rafaelfelipeac.characterdetail.data.model.CharacterDetailResponse
-import com.rafaelfelipeac.rickandmortyapp.network.RequestResult
+import com.rafaelfelipeac.rickandmortyapp.core.network.RequestResult
 import javax.inject.Inject
 
 interface CharacterDetailInteractor {

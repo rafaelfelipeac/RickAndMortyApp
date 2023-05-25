@@ -2,7 +2,7 @@ package com.rafaelfelipeac.rickandmortyapp.features.characterlist.domain
 
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.data.CharacterListRepository
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.data.model.CharacterListResponse
-import com.rafaelfelipeac.rickandmortyapp.network.RequestResult
+import com.rafaelfelipeac.rickandmortyapp.core.network.RequestResult
 import javax.inject.Inject
 
 interface CharacterListInteractor {

@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.rickandmortyapp.network
+package com.rafaelfelipeac.rickandmortyapp.core.network
 
 sealed interface RequestResult<T : Any>
 
