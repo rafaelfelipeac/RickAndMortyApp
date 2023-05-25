@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.theme
+package com.rafaelfelipeac.rickandmortyapp.core.theme
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

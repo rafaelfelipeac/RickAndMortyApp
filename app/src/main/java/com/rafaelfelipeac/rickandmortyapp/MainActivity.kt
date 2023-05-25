@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rafaelfelipeac.characterdetail.presentation.CharacterDetailScreen
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.presentation.CharacterListScreen
-import com.rafaelfelipeac.theme.RickAndMortyAppTheme
+import com.rafaelfelipeac.rickandmortyapp.core.theme.RickAndMortyAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

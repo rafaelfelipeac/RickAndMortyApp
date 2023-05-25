@@ -7,7 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.rafaelfelipeac.theme.RickAndMortyAppTheme
+import com.rafaelfelipeac.rickandmortyapp.core.theme.RickAndMortyAppTheme
 
 @Composable
 fun CharacterListScreen() {

@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.theme
+package com.rafaelfelipeac.rickandmortyapp.core.theme
 
 import org.junit.Test
 
