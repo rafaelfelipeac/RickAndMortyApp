@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.characterdetail
+package com.rafaelfelipeac.rickandmortyapp.features.characterdetail
 
 import org.junit.Test
 

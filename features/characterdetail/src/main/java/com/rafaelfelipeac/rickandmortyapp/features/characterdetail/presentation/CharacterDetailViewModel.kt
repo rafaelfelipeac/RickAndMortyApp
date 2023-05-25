@@ -1,8 +1,8 @@
-package com.rafaelfelipeac.characterdetail.presentation
+package com.rafaelfelipeac.rickandmortyapp.features.characterdetail.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rafaelfelipeac.characterdetail.domain.CharacterDetailInteractor
+import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.domain.CharacterDetailInteractor
 import com.rafaelfelipeac.rickandmortyapp.core.network.RequestError
 import com.rafaelfelipeac.rickandmortyapp.core.network.RequestException
 import com.rafaelfelipeac.rickandmortyapp.core.network.RequestSuccess

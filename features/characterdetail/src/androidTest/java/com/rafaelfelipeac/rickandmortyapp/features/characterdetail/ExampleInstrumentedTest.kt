@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.characterdetail
+package com.rafaelfelipeac.rickandmortyapp.features.characterdetail
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

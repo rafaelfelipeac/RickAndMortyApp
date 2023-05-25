@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.characterdetail.presentation
+package com.rafaelfelipeac.rickandmortyapp.features.characterdetail.presentation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme

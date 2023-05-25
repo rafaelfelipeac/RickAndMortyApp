@@ -1,10 +1,10 @@
-package com.rafaelfelipeac.characterdetail.di
+package com.rafaelfelipeac.rickandmortyapp.features.characterdetail.di
 
-import com.rafaelfelipeac.characterdetail.data.CharacterDetailRepository
-import com.rafaelfelipeac.characterdetail.data.CharacterDetailRepositoryImpl
-import com.rafaelfelipeac.characterdetail.data.CharacterDetailService
-import com.rafaelfelipeac.characterdetail.domain.CharacterDetailInteractor
-import com.rafaelfelipeac.characterdetail.domain.CharacterDetailInteractorImpl
+import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.data.CharacterDetailRepository
+import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.data.CharacterDetailRepositoryImpl
+import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.data.CharacterDetailService
+import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.domain.CharacterDetailInteractor
+import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.domain.CharacterDetailInteractorImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

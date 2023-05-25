@@ -1,7 +1,7 @@
-package com.rafaelfelipeac.characterdetail.domain
+package com.rafaelfelipeac.rickandmortyapp.features.characterdetail.domain
 
-import com.rafaelfelipeac.characterdetail.data.CharacterDetailRepository
-import com.rafaelfelipeac.characterdetail.data.model.CharacterDetailResponse
+import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.data.CharacterDetailRepository
+import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.data.model.CharacterDetailResponse
 import com.rafaelfelipeac.rickandmortyapp.core.network.RequestResult
 import javax.inject.Inject
 

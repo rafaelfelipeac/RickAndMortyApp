@@ -1,6 +1,6 @@
-package com.rafaelfelipeac.characterdetail.data
+package com.rafaelfelipeac.rickandmortyapp.features.characterdetail.data
 
-import com.rafaelfelipeac.characterdetail.data.model.CharacterDetailResponse
+import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.data.model.CharacterDetailResponse
 import com.rafaelfelipeac.rickandmortyapp.core.network.RequestResult
 import com.rafaelfelipeac.rickandmortyapp.core.network.handleRequest
 import javax.inject.Inject
