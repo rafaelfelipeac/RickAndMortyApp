@@ -12,8 +12,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/network" />
+            <option value="$PROJECT_DIR$/core/theme" />
             <option value="$PROJECT_DIR$/features" />
-            <option value="$PROJECT_DIR$/features/characters" />
+            <option value="$PROJECT_DIR$/features/characterdetail" />
+            <option value="$PROJECT_DIR$/features/characterlist" />
           </set>
         </option>
       </GradleProjectSettings>

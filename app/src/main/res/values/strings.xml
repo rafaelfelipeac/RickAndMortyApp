@@ -1,9 +1,4 @@
 <resources>
     <string name="app_name">RickAndMortyApp</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="fragment_characters_label">First Fragment</string>
-
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
