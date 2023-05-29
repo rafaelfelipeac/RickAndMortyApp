@@ -51,6 +51,7 @@ android {
 
 dependencies {
     implementation implementation(project(':core:theme'))
+    implementation implementation(project(':core:navigation'))
     implementation implementation(project(':features:characterlist'))
     implementation implementation(project(':features:characterdetail'))
 

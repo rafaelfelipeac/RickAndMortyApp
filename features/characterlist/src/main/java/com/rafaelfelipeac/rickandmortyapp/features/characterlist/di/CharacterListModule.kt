@@ -36,11 +36,11 @@ object CharacterListModule {
     @Singleton
     fun provideCharacterListRepository(
         service: CharacterListService
-    ) : CharacterListRepository = CharacterListRepositoryImpl(service)
+    ): CharacterListRepository = CharacterListRepositoryImpl(service)
 
     @Provides
     @Singleton
     fun provideCharacterListInteractor(
         repository: CharacterListRepository
-    ) : CharacterListInteractor = CharacterListInteractorImpl(repository)
+    ): CharacterListInteractor = CharacterListInteractorImpl(repository)
 }
