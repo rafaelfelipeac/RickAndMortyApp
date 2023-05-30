@@ -3,9 +3,9 @@ package com.rafaelfelipeac.rickandmortyapp.features.characterdetail.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.domain.CharacterDetailInteractor
-import com.rafaelfelipeac.rickandmortyapp.core.network.RequestError
-import com.rafaelfelipeac.rickandmortyapp.core.network.RequestException
-import com.rafaelfelipeac.rickandmortyapp.core.network.RequestSuccess
+import com.rafaelfelipeac.rickandmortyapp.core.network.Error
+import com.rafaelfelipeac.rickandmortyapp.core.network.Exception
+import com.rafaelfelipeac.rickandmortyapp.core.network.Success
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,13 +18,13 @@ class CharacterDetailViewModel @Inject constructor(
     fun getCharacterDetail() {
         viewModelScope.launch {
             when (val response = interactor.getCharacterDetail()) {
-                is RequestSuccess -> {
+                is Success -> {
                     val x = ""
                 }
-                is RequestError -> {
+                is Error -> {
                     val x = ""
                 }
-                is RequestException -> {
+                is Exception -> {
                     val x = ""
                 }
             }

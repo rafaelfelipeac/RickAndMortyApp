@@ -7,8 +7,12 @@ import retrofit2.http.Query
 
 interface CharacterListService {
 
-    @GET("character")
+    @GET(CHARACTER_LIST_PATH)
     suspend fun getCharacterList(
         @Query("page") page: Int
     ): Response<CharacterListResponse>
+
+    companion object {
+        const val CHARACTER_LIST_PATH = "character"
+    }
 }

@@ -5,6 +5,8 @@ import com.rafaelfelipeac.rickandmortyapp.features.characterlist.data.CharacterL
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.data.CharacterListService
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.domain.CharacterListInteractor
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.domain.CharacterListInteractorImpl
+import com.rafaelfelipeac.rickandmortyapp.features.characterlist.presentation.CharacterListUiModel
+import com.rafaelfelipeac.rickandmortyapp.features.characterlist.presentation.CharacterListUiModelImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,4 +45,8 @@ object CharacterListModule {
     fun provideCharacterListInteractor(
         repository: CharacterListRepository
     ): CharacterListInteractor = CharacterListInteractorImpl(repository)
+
+    @Provides
+    @Singleton
+    fun provideCharacterListUiModel(): CharacterListUiModel = CharacterListUiModelImpl()
 }

@@ -8,10 +8,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -35,13 +35,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -77,7 +77,7 @@ fun CharacterListScreen(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                viewModel.searchCharacterList(it)
+                viewModel.searchCharacter(it)
             }
             Spacer(modifier = Modifier.height(8.dp))
             CharacterList(navController = navController)
@@ -145,11 +145,12 @@ fun CharacterList(
         } else {
             characterList.size / 2 + 1
         }
+
         items(itemCount) {
             if (it >= itemCount - 1 && !endReached && !isLoading && !isSearching) {
-                viewModel.loadCharacterPaginated()
+                viewModel.loadCharacters()
             }
-            PokedexRow(rowIndex = it, entries = characterList, navController = navController)
+            CharacterRow(rowIndex = it, entries = characterList, navController = navController)
         }
     }
 
@@ -162,7 +163,7 @@ fun CharacterList(
         }
         if (loadError.isNotEmpty()) {
             RetrySection(error = loadError) {
-                viewModel.loadCharacterPaginated()
+                viewModel.loadCharacters()
             }
         }
     }
@@ -170,34 +171,22 @@ fun CharacterList(
 }
 
 @Composable
-fun PokedexEntry(
+fun CharacterEntry(
     entry: Character,
     navController: NavController,
     modifier: Modifier = Modifier,
     viewModel: CharacterListViewModel = hiltViewModel()
 ) {
-    val defaultDominantColor = MaterialTheme.colors.surface
-    var dominantColor by remember {
-        mutableStateOf(defaultDominantColor)
-    }
-
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .shadow(5.dp, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
-            .aspectRatio(1f)
-            .background(
-                Brush.verticalGradient(
-                    listOf(
-                        dominantColor,
-                        defaultDominantColor
-                    )
-                )
-            )
+            //.aspectRatio(1f)
+            .background(MaterialTheme.colors.surface)
             .clickable {
                 navController.navigate(
-                    "$CHARACTER_LIST_SCREEN/${dominantColor.toArgb()}/${entry.name}"
+                    "$CHARACTER_LIST_SCREEN}/${entry.name}"
                 )
             }
     ) {
@@ -213,43 +202,81 @@ fun PokedexEntry(
                         modifier = Modifier.scale(0.5f)
                     )
                 },
-                onSuccess = {
-                    /*viewModel.calcDominantColor(it.result.drawable) { color ->
-                        dominantColor = color
-                    }*/
-                },
                 contentDescription = entry.name,
                 modifier = Modifier
-                    .size(120.dp)
-                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .offset(y = (-10).dp)
             )
             Text(
                 text = entry.name,
-                //fontFamily = RobotoCondensed,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
+            Row {
+                Box(
+                    modifier = Modifier
+                        .padding(8.dp, 4.dp, 0.dp, 0.dp)
+                        .size(12.dp)
+                        .clip(CircleShape)
+                        .background(viewModel.getStatusColor(entry))
+                )
+                Text(
+                    text = "${entry.status} - ${entry.species}",
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Last known location:",
+                fontWeight = FontWeight.Bold,
+                fontSize = 12.sp,
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
+            )
+            Text(
+                text = entry.location.name,
+                fontSize = 14.sp,
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
 
 @Composable
-fun PokedexRow(
+fun CharacterRow(
     rowIndex: Int,
     entries: List<Character>,
     navController: NavController
 ) {
     Column {
         Row {
-            PokedexEntry(
+            CharacterEntry(
                 entry = entries[rowIndex * 2],
                 navController = navController,
                 modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.width(16.dp))
             if (entries.size >= rowIndex * 2 + 2) {
-                PokedexEntry(
+                CharacterEntry(
                     entry = entries[rowIndex * 2 + 1],
                     navController = navController,
                     modifier = Modifier.weight(1f)
