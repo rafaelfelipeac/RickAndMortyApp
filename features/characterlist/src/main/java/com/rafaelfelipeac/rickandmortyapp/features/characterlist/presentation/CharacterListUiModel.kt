@@ -14,9 +14,14 @@ class CharacterListUiModelImpl : CharacterListUiModel {
 
     override fun getStatusColor(character: Character): Color {
         return when (character.status) {
-            "Alive" -> StatusAlive
-            "Dead" -> StatusDead
+            ALIVE -> StatusAlive
+            DEAD -> StatusDead
             else -> StatusUndefined
         }
+    }
+
+    companion object {
+        const val ALIVE = "Alive"
+        const val DEAD = "Dead"
     }
 }
