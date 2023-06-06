@@ -260,7 +260,9 @@ fun CharacterEntry(
                     textAlign = TextAlign.Start,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = PaddingMedium)
+                        .padding(horizontal = PaddingMedium),
+                    maxLines = MAX_LINES,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
             Spacer(modifier = Modifier.height(SpacerSmall))
