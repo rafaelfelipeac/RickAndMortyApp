@@ -7,15 +7,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.rafaelfelipeac.rickandmortyapp.core.theme.RickAndMortyAppTheme
 
 @Composable
-fun CharacterDetailScreen() {
+fun CharacterDetailScreen(characterId: Int, navController: NavController) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
-        Greeting("Detail")
+        Greeting("Detail = $characterId")
     }
 }
 

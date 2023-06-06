@@ -47,7 +47,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
-import com.rafaelfelipeac.rickandmortyapp.core.navigation.CHARACTER_DETAIL_ROUTE
+import com.rafaelfelipeac.rickandmortyapp.core.navigation.CHARACTER_DETAIL_NAV
 import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterImageHeight
 import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterImageOffset
 import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterStatusSize
@@ -210,9 +210,7 @@ fun CharacterEntry(
             .clip(RoundedCornerShape(RoundedCorner))
             .background(MaterialTheme.colors.surface)
             .clickable {
-                navController.navigate(
-                    String.format(CHARACTER_DETAIL_ROUTE, entry.name)
-                )
+                navController.navigate(String.format(CHARACTER_DETAIL_NAV, entry.id))
             }
     ) {
         Column {
