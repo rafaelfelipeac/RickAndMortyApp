@@ -1,0 +1,7 @@
+package com.rafaelfelipeac.rickandmortyapp.core.theme
+
+import androidx.compose.ui.unit.sp
+
+val FontSmall = 12.sp
+val FontMedium = 14.sp
+val FontLarge = 16.sp

@@ -1,3 +1,7 @@
 <resources>
-
+    <string name="logo_content_description">Rick And Morty Logo</string>
+    <string name="search_hint">Search…</string>
+    <string name="status_format">"%s - %s"</string>
+    <string name="last_know_location">Last known location:"</string>
+    <string name="retry">Retry</string>
 </resources>

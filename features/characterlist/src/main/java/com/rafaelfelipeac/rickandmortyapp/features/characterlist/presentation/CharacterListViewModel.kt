@@ -51,7 +51,7 @@ class CharacterListViewModel @Inject constructor(
                 }
 
                 else -> {
-                    // exception
+                    // Exception
                 }
             }
         }

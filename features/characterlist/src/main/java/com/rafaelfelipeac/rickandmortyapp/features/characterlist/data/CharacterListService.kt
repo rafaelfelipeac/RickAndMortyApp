@@ -9,10 +9,11 @@ interface CharacterListService {
 
     @GET(CHARACTER_LIST_PATH)
     suspend fun getCharacterList(
-        @Query("page") page: Int
+        @Query(PARAMETER_PAGE) page: Int
     ): Response<CharacterListResponse>
 
     companion object {
         const val CHARACTER_LIST_PATH = "character"
+        const val PARAMETER_PAGE = "page"
     }
 }

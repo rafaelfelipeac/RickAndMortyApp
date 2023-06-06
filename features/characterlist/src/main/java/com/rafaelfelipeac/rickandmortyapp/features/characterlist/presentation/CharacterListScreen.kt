@@ -38,19 +38,45 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
-import com.rafaelfelipeac.rickandmortyapp.core.navigation.CHARACTER_LIST_SCREEN
+import com.rafaelfelipeac.rickandmortyapp.core.navigation.CHARACTER_DETAIL_ROUTE
+import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterImageHeight
+import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterImageOffset
+import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterStatusSize
+import com.rafaelfelipeac.rickandmortyapp.core.theme.FontLarge
+import com.rafaelfelipeac.rickandmortyapp.core.theme.FontMedium
+import com.rafaelfelipeac.rickandmortyapp.core.theme.FontSmall
+import com.rafaelfelipeac.rickandmortyapp.core.theme.PaddingLarge
+import com.rafaelfelipeac.rickandmortyapp.core.theme.PaddingMedium
+import com.rafaelfelipeac.rickandmortyapp.core.theme.PaddingSmall
+import com.rafaelfelipeac.rickandmortyapp.core.theme.RoundedCorner
+import com.rafaelfelipeac.rickandmortyapp.core.theme.ShadowElevation
+import com.rafaelfelipeac.rickandmortyapp.core.theme.SpacerLarge
+import com.rafaelfelipeac.rickandmortyapp.core.theme.SpacerMedium
+import com.rafaelfelipeac.rickandmortyapp.core.theme.SpacerSmall
+import com.rafaelfelipeac.rickandmortyapp.core.theme.TextPaddingHorizontal
+import com.rafaelfelipeac.rickandmortyapp.core.theme.TextPaddingVertical
+import com.rafaelfelipeac.rickandmortyapp.core.theme.Zero
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.R
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.data.model.Character
+
+const val EMPTY = ""
+const val MAX_LINES = 1
+const val WEIGHT_DEFAULT = 1f
+const val PROGRESS_BAR_SCALE = 0.5f
+const val MAX_ELEMENTS_PER_ROW = 2
+const val MIN_ELEMENTS_PER_ROW = 1
+const val EVEN_CHECK = 2
+const val EVEN_RESULT = 0
+const val ITEM_OFFSET = 1
 
 @Composable
 fun CharacterListScreen(
@@ -62,24 +88,24 @@ fun CharacterListScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         Column {
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(SpacerLarge))
             Image(
-                painter = painterResource(id = R.drawable.rick_and_morty),
-                contentDescription = "Rick And Morty Logo",
+                painter = painterResource(R.drawable.rick_and_morty),
+                contentDescription = stringResource(R.string.logo_content_description),
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(SpacerSmall))
             SearchBar(
-                hint = "Search...",
+                hint = stringResource(R.string.search_hint),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(PaddingLarge)
             ) {
                 viewModel.searchCharacter(it)
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(SpacerSmall))
             CharacterList(navController = navController)
         }
     }
@@ -88,14 +114,14 @@ fun CharacterListScreen(
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
-    hint: String = "",
+    hint: String = EMPTY,
     onSearch: (String) -> Unit = {}
 ) {
     var text by remember {
-        mutableStateOf("")
+        mutableStateOf(EMPTY)
     }
     var isHintDisplayed by remember {
-        mutableStateOf(hint != "")
+        mutableStateOf(hint != EMPTY)
     }
 
     Box(modifier = modifier) {
@@ -105,14 +131,14 @@ fun SearchBar(
                 text = it
                 onSearch(it)
             },
-            maxLines = 1,
+            maxLines = MAX_LINES,
             singleLine = true,
             textStyle = TextStyle(color = Color.Black),
             modifier = Modifier
                 .fillMaxWidth()
-                .shadow(5.dp, CircleShape)
+                .shadow(ShadowElevation, CircleShape)
                 .background(Color.White, CircleShape)
-                .padding(horizontal = 20.dp, vertical = 12.dp)
+                .padding(horizontal = TextPaddingHorizontal, vertical = TextPaddingVertical)
                 .onFocusChanged {
                     isHintDisplayed = !it.isFocused
                 }
@@ -122,7 +148,7 @@ fun SearchBar(
                 text = hint,
                 color = Color.LightGray,
                 modifier = Modifier
-                    .padding(horizontal = 20.dp, vertical = 12.dp)
+                    .padding(horizontal = TextPaddingHorizontal, vertical = TextPaddingVertical)
             )
         }
     }
@@ -139,15 +165,15 @@ fun CharacterList(
     val isLoading by remember { viewModel.isLoading }
     val isSearching by remember { viewModel.isSearching }
 
-    LazyColumn(contentPadding = PaddingValues(16.dp)) {
-        val itemCount = if (characterList.size % 2 == 0) {
-            characterList.size / 2
+    LazyColumn(contentPadding = PaddingValues(PaddingLarge)) {
+        val itemCount = if (characterList.size % EVEN_CHECK == EVEN_RESULT) {
+            characterList.size / MAX_ELEMENTS_PER_ROW
         } else {
-            characterList.size / 2 + 1
+            characterList.size / MAX_ELEMENTS_PER_ROW + MIN_ELEMENTS_PER_ROW
         }
 
         items(itemCount) {
-            if (it >= itemCount - 1 && !endReached && !isLoading && !isSearching) {
+            if (it >= itemCount - ITEM_OFFSET && !endReached && !isLoading && !isSearching) {
                 viewModel.loadCharacters()
             }
             CharacterRow(rowIndex = it, entries = characterList, navController = navController)
@@ -180,13 +206,12 @@ fun CharacterEntry(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .shadow(5.dp, RoundedCornerShape(10.dp))
-            .clip(RoundedCornerShape(10.dp))
-            //.aspectRatio(1f)
+            .shadow(ShadowElevation, RoundedCornerShape(RoundedCorner))
+            .clip(RoundedCornerShape(RoundedCorner))
             .background(MaterialTheme.colors.surface)
             .clickable {
                 navController.navigate(
-                    "$CHARACTER_LIST_SCREEN}/${entry.name}"
+                    String.format(CHARACTER_DETAIL_ROUTE, entry.name)
                 )
             }
     ) {
@@ -199,64 +224,68 @@ fun CharacterEntry(
                 loading = {
                     CircularProgressIndicator(
                         color = MaterialTheme.colors.primary,
-                        modifier = Modifier.scale(0.5f)
+                        modifier = Modifier.scale(PROGRESS_BAR_SCALE)
                     )
                 },
                 contentDescription = entry.name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
-                    .offset(y = (-10).dp)
+                    .height(CharacterImageHeight)
+                    .offset(y = CharacterImageOffset)
             )
             Text(
                 text = entry.name,
                 fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
+                fontSize = FontLarge,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-                maxLines = 1,
+                    .padding(horizontal = PaddingMedium),
+                maxLines = MAX_LINES,
                 overflow = TextOverflow.Ellipsis
             )
             Row {
                 Box(
                     modifier = Modifier
-                        .padding(8.dp, 4.dp, 0.dp, 0.dp)
-                        .size(12.dp)
+                        .padding(PaddingMedium, PaddingSmall, Zero, Zero)
+                        .size(CharacterStatusSize)
                         .clip(CircleShape)
                         .background(viewModel.getStatusColor(entry))
                 )
                 Text(
-                    text = "${entry.status} - ${entry.species}",
-                    fontSize = 14.sp,
+                    text = String.format(
+                        stringResource(R.string.status_format),
+                        entry.status,
+                        entry.species
+                    ),
+                    fontSize = FontMedium,
                     textAlign = TextAlign.Start,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
+                        .padding(horizontal = PaddingMedium)
                 )
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(SpacerSmall))
             Text(
-                text = "Last known location:",
+                text = stringResource(R.string.last_know_location),
                 fontWeight = FontWeight.Bold,
-                fontSize = 12.sp,
+                fontSize = FontSmall,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
+                    .padding(horizontal = PaddingMedium)
             )
             Text(
                 text = entry.location.name,
-                fontSize = 14.sp,
+                fontSize = FontMedium,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-                maxLines = 1,
+                    .padding(horizontal = PaddingMedium),
+                maxLines = MAX_LINES,
                 overflow = TextOverflow.Ellipsis
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(SpacerMedium))
         }
     }
 }
@@ -270,22 +299,22 @@ fun CharacterRow(
     Column {
         Row {
             CharacterEntry(
-                entry = entries[rowIndex * 2],
+                entry = entries[rowIndex * MAX_ELEMENTS_PER_ROW],
                 navController = navController,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(WEIGHT_DEFAULT)
             )
-            Spacer(modifier = Modifier.width(16.dp))
-            if (entries.size >= rowIndex * 2 + 2) {
+            Spacer(modifier = Modifier.width(SpacerMedium))
+            if (entries.size >= rowIndex * MAX_ELEMENTS_PER_ROW + MAX_ELEMENTS_PER_ROW) {
                 CharacterEntry(
-                    entry = entries[rowIndex * 2 + 1],
+                    entry = entries[rowIndex * MAX_ELEMENTS_PER_ROW + MIN_ELEMENTS_PER_ROW],
                     navController = navController,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(WEIGHT_DEFAULT)
                 )
             } else {
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.weight(WEIGHT_DEFAULT))
             }
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(SpacerMedium))
     }
 }
 
@@ -295,13 +324,13 @@ fun RetrySection(
     onRetry: () -> Unit
 ) {
     Column {
-        Text(error, color = Color.Red, fontSize = 18.sp)
-        Spacer(modifier = Modifier.height(8.dp))
+        Text(error, color = Color.Red, fontSize = FontLarge)
+        Spacer(modifier = Modifier.height(SpacerSmall))
         Button(
             onClick = { onRetry() },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
-            Text(text = "Retry")
+            Text(text = stringResource(R.string.retry))
         }
     }
 }
