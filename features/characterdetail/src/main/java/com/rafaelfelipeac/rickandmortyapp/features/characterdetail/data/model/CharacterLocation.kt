@@ -1,3 +1,5 @@
 package com.rafaelfelipeac.rickandmortyapp.features.characterdetail.data.model
 
-class CharacterDetailResponse(val title: String)
+data class CharacterLocation(
+    val name: String
+)
