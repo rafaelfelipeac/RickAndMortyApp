@@ -36,7 +36,8 @@ class CharacterDetailViewModel @Inject constructor(
                 }
 
                 else -> {
-                    // Exception
+                    loadError.value = GENERIC_ERROR_MESSAGE
+                    isLoading.value = false
                 }
             }
         }
@@ -44,5 +45,6 @@ class CharacterDetailViewModel @Inject constructor(
 
     companion object {
         const val EMPTY = ""
+        const val GENERIC_ERROR_MESSAGE = "Something is wrong."
     }
 }

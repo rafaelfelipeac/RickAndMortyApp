@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="logo_content_description">Rick And Morty Logo</string>
-    <string name="search_hint">Search…</string>
-    <string name="status_format">"%s - %s"</string>
-    <string name="retry">Retry</string>
+    <string name="character_list_logo_content_description">Rick And Morty Logo</string>
+    <string name="character_list_search_hint">Search…</string>
+    <string name="character_list_status_format">"%s - %s"</string>
+    <string name="character_list_retry">Retry</string>
 </resources>

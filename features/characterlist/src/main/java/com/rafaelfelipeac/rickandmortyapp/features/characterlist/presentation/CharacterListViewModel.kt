@@ -51,7 +51,8 @@ class CharacterListViewModel @Inject constructor(
                 }
 
                 else -> {
-                    // Exception
+                    loadError.value = GENERIC_ERROR_MESSAGE
+                    isLoading.value = false
                 }
             }
         }
@@ -91,5 +92,6 @@ class CharacterListViewModel @Inject constructor(
     companion object {
         const val FIRST_PAGE = 1
         const val EMPTY = ""
+        const val GENERIC_ERROR_MESSAGE = "Something is wrong."
     }
 }

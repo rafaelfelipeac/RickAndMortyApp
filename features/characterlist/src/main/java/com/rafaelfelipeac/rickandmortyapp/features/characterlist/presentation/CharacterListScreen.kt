@@ -53,7 +53,7 @@ import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterImageOffset
 import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterStatusSize
 import com.rafaelfelipeac.rickandmortyapp.core.theme.FontLarge
 import com.rafaelfelipeac.rickandmortyapp.core.theme.FontMedium
-import com.rafaelfelipeac.rickandmortyapp.core.theme.FontSmall
+import com.rafaelfelipeac.rickandmortyapp.core.theme.PROGRESS_BAR_SCALE
 import com.rafaelfelipeac.rickandmortyapp.core.theme.PaddingLarge
 import com.rafaelfelipeac.rickandmortyapp.core.theme.PaddingMedium
 import com.rafaelfelipeac.rickandmortyapp.core.theme.PaddingSmall
@@ -71,7 +71,6 @@ import com.rafaelfelipeac.rickandmortyapp.features.characterlist.data.model.Char
 const val EMPTY = ""
 const val MAX_LINES = 1
 const val WEIGHT_DEFAULT = 1f
-const val PROGRESS_BAR_SCALE = 0.5f
 const val MAX_ELEMENTS_PER_ROW = 2
 const val MIN_ELEMENTS_PER_ROW = 1
 const val EVEN_CHECK = 2
@@ -91,14 +90,14 @@ fun CharacterListScreen(
             Spacer(modifier = Modifier.height(SpacerLarge))
             Image(
                 painter = painterResource(R.drawable.rick_and_morty),
-                contentDescription = stringResource(R.string.logo_content_description),
+                contentDescription = stringResource(R.string.character_list_logo_content_description),
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
             )
             Spacer(modifier = Modifier.height(SpacerSmall))
             SearchBar(
-                hint = stringResource(R.string.search_hint),
+                hint = stringResource(R.string.character_list_search_hint),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(PaddingLarge)
@@ -252,7 +251,7 @@ fun CharacterEntry(
                 )
                 Text(
                     text = String.format(
-                        stringResource(R.string.status_format),
+                        stringResource(R.string.character_list_status_format),
                         character.status,
                         character.species
                     ),
@@ -310,7 +309,7 @@ fun RetrySection(
             onClick = { onRetry() },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
-            Text(text = stringResource(R.string.retry))
+            Text(text = stringResource(R.string.character_list_retry))
         }
     }
 }

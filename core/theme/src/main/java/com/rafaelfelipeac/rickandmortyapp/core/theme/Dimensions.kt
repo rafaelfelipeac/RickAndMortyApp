@@ -23,3 +23,10 @@ val CharacterImageHeight = 200.dp
 val CharacterImageOffset = (-10).dp
 
 val CharacterStatusSize = 12.dp
+
+val ArrowSize = 36.dp
+
+val CharacterDetailLoadingSize = 100.dp
+val CharacterDetailSectionOffset = 120.dp
+
+const val PROGRESS_BAR_SCALE = 0.5f

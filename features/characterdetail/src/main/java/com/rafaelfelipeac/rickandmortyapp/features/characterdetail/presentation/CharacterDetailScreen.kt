@@ -32,31 +32,44 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.rafaelfelipeac.characterdetail.R
+import com.rafaelfelipeac.rickandmortyapp.core.theme.ArrowSize
+import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterDetailLoadingSize
+import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterDetailSectionOffset
 import com.rafaelfelipeac.rickandmortyapp.core.theme.DarkGreen
+import com.rafaelfelipeac.rickandmortyapp.core.theme.FontDetailLarge
 import com.rafaelfelipeac.rickandmortyapp.core.theme.FontLarge
 import com.rafaelfelipeac.rickandmortyapp.core.theme.FontMedium
 import com.rafaelfelipeac.rickandmortyapp.core.theme.LightGreen
+import com.rafaelfelipeac.rickandmortyapp.core.theme.PROGRESS_BAR_SCALE
+import com.rafaelfelipeac.rickandmortyapp.core.theme.PaddingLarge
 import com.rafaelfelipeac.rickandmortyapp.core.theme.PaddingMedium
+import com.rafaelfelipeac.rickandmortyapp.core.theme.RoundedCorner
+import com.rafaelfelipeac.rickandmortyapp.core.theme.ShadowElevation
+import com.rafaelfelipeac.rickandmortyapp.core.theme.SpacerMedium
 import com.rafaelfelipeac.rickandmortyapp.core.theme.SpacerSmall
 import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.data.model.Character
 import java.util.Locale
+
+const val MAX_LINES = 1
+const val TOP_PADDING = 85
+const val CHARACTER_IMAGE_SIZE = 250
+const val OFFSET_DIVIDER = 2f
+const val DETAIL_TOP_FRACTION = 0.2f
 
 @Composable
 fun CharacterDetailScreen(
     characterId: Int,
     navController: NavController,
-    topPadding: Dp = 85.dp,
-    characterImageSize: Dp = 250.dp,
     viewModel: CharacterDetailViewModel = hiltViewModel(),
 ) {
     viewModel.getCharacterDetail(characterId)
@@ -69,13 +82,13 @@ fun CharacterDetailScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(LightGreen)
-            .padding(bottom = 16.dp)
+            .padding(bottom = PaddingLarge)
     ) {
         CharacterDetailTopSection(
             navController = navController,
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.2f)
+                .fillMaxHeight(DETAIL_TOP_FRACTION)
                 .align(Alignment.TopCenter)
         )
         CharacterDetailStateWrapper(
@@ -85,24 +98,24 @@ fun CharacterDetailScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
-                    top = topPadding + characterImageSize / 2f,
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp
+                    top = TOP_PADDING.dp + CHARACTER_IMAGE_SIZE.dp / OFFSET_DIVIDER,
+                    start = PaddingLarge,
+                    end = PaddingLarge,
+                    bottom = PaddingLarge
                 )
-                .shadow(10.dp, RoundedCornerShape(10.dp))
-                .clip(RoundedCornerShape(10.dp))
+                .shadow(ShadowElevation, RoundedCornerShape(RoundedCorner))
+                .clip(RoundedCornerShape(RoundedCorner))
                 .background(MaterialTheme.colors.surface)
-                .padding(16.dp)
+                .padding(PaddingLarge)
                 .align(Alignment.BottomCenter),
             loadingModifier = Modifier
-                .size(100.dp)
+                .size(CharacterDetailLoadingSize)
                 .align(Alignment.Center)
                 .padding(
-                    top = topPadding + characterImageSize / 2f,
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp
+                    top = TOP_PADDING.dp + CHARACTER_IMAGE_SIZE.dp / OFFSET_DIVIDER,
+                    start = PaddingLarge,
+                    end = PaddingLarge,
+                    bottom = PaddingLarge
                 )
         )
         Box(
@@ -119,13 +132,15 @@ fun CharacterDetailScreen(
                     loading = {
                         CircularProgressIndicator(
                             color = MaterialTheme.colors.primary,
-                            modifier = Modifier.scale(0.5f)
+                            modifier = Modifier.scale(PROGRESS_BAR_SCALE)
                         )
                     },
                     contentDescription = character?.name,
                     modifier = Modifier
-                        .size(characterImageSize)
-                        .offset(y = topPadding)
+                        .size(CHARACTER_IMAGE_SIZE.dp)
+                        .offset(y = TOP_PADDING.dp)
+                        .shadow(ShadowElevation, RoundedCornerShape(RoundedCorner))
+                        .clip(RoundedCornerShape(RoundedCorner))
                 )
             }
         }
@@ -154,8 +169,8 @@ fun CharacterDetailTopSection(
             contentDescription = null,
             tint = Color.White,
             modifier = Modifier
-                .size(36.dp)
-                .offset(16.dp, 16.dp)
+                .size(ArrowSize)
+                .offset(SpacerMedium, SpacerMedium)
                 .clickable {
                     navController.popBackStack()
                 }
@@ -206,19 +221,23 @@ fun CharacterDetailSection(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxSize()
-            .offset(y = 120.dp)
-            .verticalScroll(scrollState) // problem
+            .offset(y = CharacterDetailSectionOffset)
+            .verticalScroll(scrollState)
     ) {
         Text(
-            text = "${character.id} - ${character.name.capitalize(Locale.ROOT)}",
+            text = String.format(
+                stringResource(R.string.character_detail_name_format),
+                character.id,
+                character.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+            ),
             fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
+            fontSize = FontDetailLarge,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.onSurface
         )
         Spacer(modifier = Modifier.height(SpacerSmall))
         Text(
-            text = "Status:",
+            text = stringResource(R.string.character_detail_status),
             fontWeight = FontWeight.Bold,
             fontSize = FontMedium,
             textAlign = TextAlign.Start,
@@ -233,12 +252,12 @@ fun CharacterDetailSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = PaddingMedium),
-            maxLines = 1,
+            maxLines = MAX_LINES,
             overflow = TextOverflow.Ellipsis
         )
         Spacer(modifier = Modifier.height(SpacerSmall))
         Text(
-            text = "Species:",
+            text = stringResource(R.string.character_detail_species),
             fontWeight = FontWeight.Bold,
             fontSize = FontMedium,
             textAlign = TextAlign.Start,
@@ -253,12 +272,12 @@ fun CharacterDetailSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = PaddingMedium),
-            maxLines = 1,
+            maxLines = MAX_LINES,
             overflow = TextOverflow.Ellipsis
         )
         Spacer(modifier = Modifier.height(SpacerSmall))
         Text(
-            text = "Last know location:",
+            text = stringResource(R.string.character_detail_last_know_location),
             fontWeight = FontWeight.Bold,
             fontSize = FontMedium,
             textAlign = TextAlign.Start,
@@ -273,12 +292,12 @@ fun CharacterDetailSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = PaddingMedium),
-            maxLines = 1,
+            maxLines = MAX_LINES,
             overflow = TextOverflow.Ellipsis
         )
         Spacer(modifier = Modifier.height(SpacerSmall))
         Text(
-            text = "Episodes:",
+            text = stringResource(R.string.character_detail_episodes),
             fontWeight = FontWeight.Bold,
             fontSize = FontMedium,
             textAlign = TextAlign.Start,
@@ -293,7 +312,7 @@ fun CharacterDetailSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = PaddingMedium),
-            maxLines = 1,
+            maxLines = MAX_LINES,
             overflow = TextOverflow.Ellipsis
         )
     }
