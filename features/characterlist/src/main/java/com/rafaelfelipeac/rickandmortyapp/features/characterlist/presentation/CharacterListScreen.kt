@@ -47,6 +47,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.rafaelfelipeac.rickandmortyapp.core.extensions.getStatusColor
 import com.rafaelfelipeac.rickandmortyapp.core.navigation.CHARACTER_DETAIL_NAV
 import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterImageHeight
 import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterImageOffset
@@ -200,7 +201,6 @@ fun CharacterEntry(
     character: Character,
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: CharacterListViewModel = hiltViewModel()
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -247,7 +247,7 @@ fun CharacterEntry(
                         .padding(PaddingMedium, PaddingSmall, Zero, Zero)
                         .size(CharacterStatusSize)
                         .clip(CircleShape)
-                        .background(viewModel.getStatusColor(character))
+                        .background(character.status.getStatusColor())
                 )
                 Text(
                     text = String.format(

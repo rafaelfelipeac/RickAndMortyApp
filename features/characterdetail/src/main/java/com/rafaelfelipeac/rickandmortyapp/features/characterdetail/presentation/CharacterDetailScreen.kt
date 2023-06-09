@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
@@ -42,9 +44,11 @@ import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.rafaelfelipeac.characterdetail.R
+import com.rafaelfelipeac.rickandmortyapp.core.extensions.getStatusColor
 import com.rafaelfelipeac.rickandmortyapp.core.theme.ArrowSize
 import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterDetailLoadingSize
 import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterDetailSectionOffset
+import com.rafaelfelipeac.rickandmortyapp.core.theme.CharacterStatusSize
 import com.rafaelfelipeac.rickandmortyapp.core.theme.DarkGreen
 import com.rafaelfelipeac.rickandmortyapp.core.theme.FontDetailLarge
 import com.rafaelfelipeac.rickandmortyapp.core.theme.FontLarge
@@ -53,10 +57,12 @@ import com.rafaelfelipeac.rickandmortyapp.core.theme.LightGreen
 import com.rafaelfelipeac.rickandmortyapp.core.theme.PROGRESS_BAR_SCALE
 import com.rafaelfelipeac.rickandmortyapp.core.theme.PaddingLarge
 import com.rafaelfelipeac.rickandmortyapp.core.theme.PaddingMedium
+import com.rafaelfelipeac.rickandmortyapp.core.theme.PaddingSmall
 import com.rafaelfelipeac.rickandmortyapp.core.theme.RoundedCorner
 import com.rafaelfelipeac.rickandmortyapp.core.theme.ShadowElevation
 import com.rafaelfelipeac.rickandmortyapp.core.theme.SpacerMedium
 import com.rafaelfelipeac.rickandmortyapp.core.theme.SpacerSmall
+import com.rafaelfelipeac.rickandmortyapp.core.theme.Zero
 import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.data.model.Character
 import java.util.Locale
 
@@ -214,7 +220,7 @@ fun CharacterDetailStateWrapper(
 @Composable
 fun CharacterDetailSection(
     character: Character,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
     Column(
@@ -236,15 +242,24 @@ fun CharacterDetailSection(
             color = MaterialTheme.colors.onSurface
         )
         Spacer(modifier = Modifier.height(SpacerSmall))
-        Text(
-            text = stringResource(R.string.character_detail_status),
-            fontWeight = FontWeight.Bold,
-            fontSize = FontMedium,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium)
-        )
+        Row {
+            Box(
+                modifier = Modifier
+                    .padding(PaddingMedium, PaddingSmall, Zero, Zero)
+                    .size(CharacterStatusSize)
+                    .clip(CircleShape)
+                    .background(character.status.getStatusColor())
+            )
+            Text(
+                text = stringResource(R.string.character_detail_status),
+                fontWeight = FontWeight.Bold,
+                fontSize = FontMedium,
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = PaddingMedium)
+            )
+        }
         Text(
             text = character.status,
             fontSize = FontLarge,

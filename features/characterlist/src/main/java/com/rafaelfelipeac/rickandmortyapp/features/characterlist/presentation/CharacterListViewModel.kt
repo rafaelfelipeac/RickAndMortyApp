@@ -13,8 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterListViewModel @Inject constructor(
-    private val interactor: CharacterListInteractor,
-    private val uiModel: CharacterListUiModel
+    private val interactor: CharacterListInteractor
 ) : ViewModel() {
 
     var characterList = mutableStateOf<List<Character>>(listOf())
@@ -86,8 +85,6 @@ class CharacterListViewModel @Inject constructor(
             isSearching.value = true
         }
     }
-
-    fun getStatusColor(character: Character) = uiModel.getStatusColor(character)
 
     companion object {
         const val FIRST_PAGE = 1

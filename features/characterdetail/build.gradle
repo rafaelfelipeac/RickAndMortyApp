@@ -47,6 +47,7 @@ dependencies {
 
     implementation(project(":core:network"))
     implementation(project(":core:theme"))
+    implementation(project(":core:extensions"))
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
