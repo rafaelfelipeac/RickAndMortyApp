@@ -3,7 +3,7 @@ package com.rafaelfelipeac.rickandmortyapp.features.characterlist.presentation
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rafaelfelipeac.rickandmortyapp.core.network.Success
+import com.rafaelfelipeac.rickandmortyapp.core.network.Request
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.data.model.Character
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.domain.CharacterListInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,7 +36,7 @@ class CharacterListViewModel @Inject constructor(
             isLoading.value = true
 
             when (val result = interactor.getCharacterList(curPage)) {
-                is Success -> {
+                is Request.Success -> {
                     curPage++
 
                     endReached.value = curPage >= result.data.info.pages

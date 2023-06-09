@@ -198,7 +198,7 @@ fun CharacterList(
 
 @Composable
 fun CharacterEntry(
-    entry: Character,
+    character: Character,
     navController: NavController,
     modifier: Modifier = Modifier,
     viewModel: CharacterListViewModel = hiltViewModel()
@@ -210,13 +210,13 @@ fun CharacterEntry(
             .clip(RoundedCornerShape(RoundedCorner))
             .background(MaterialTheme.colors.surface)
             .clickable {
-                navController.navigate(String.format(CHARACTER_DETAIL_NAV, entry.id))
+                navController.navigate(String.format(CHARACTER_DETAIL_NAV, character.id))
             }
     ) {
         Column {
             SubcomposeAsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(entry.image)
+                    .data(character.image)
                     .crossfade(true)
                     .build(),
                 loading = {
@@ -225,14 +225,14 @@ fun CharacterEntry(
                         modifier = Modifier.scale(PROGRESS_BAR_SCALE)
                     )
                 },
-                contentDescription = entry.name,
+                contentDescription = character.name,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(CharacterImageHeight)
                     .offset(y = CharacterImageOffset)
             )
             Text(
-                text = entry.name,
+                text = character.name,
                 fontWeight = FontWeight.Bold,
                 fontSize = FontLarge,
                 textAlign = TextAlign.Start,
@@ -248,13 +248,13 @@ fun CharacterEntry(
                         .padding(PaddingMedium, PaddingSmall, Zero, Zero)
                         .size(CharacterStatusSize)
                         .clip(CircleShape)
-                        .background(viewModel.getStatusColor(entry))
+                        .background(viewModel.getStatusColor(character))
                 )
                 Text(
                     text = String.format(
                         stringResource(R.string.status_format),
-                        entry.status,
-                        entry.species
+                        character.status,
+                        character.species
                     ),
                     fontSize = FontMedium,
                     textAlign = TextAlign.Start,
@@ -265,26 +265,6 @@ fun CharacterEntry(
                     overflow = TextOverflow.Ellipsis
                 )
             }
-            Spacer(modifier = Modifier.height(SpacerSmall))
-            Text(
-                text = stringResource(R.string.last_know_location),
-                fontWeight = FontWeight.Bold,
-                fontSize = FontSmall,
-                textAlign = TextAlign.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = PaddingMedium)
-            )
-            Text(
-                text = entry.location.name,
-                fontSize = FontMedium,
-                textAlign = TextAlign.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = PaddingMedium),
-                maxLines = MAX_LINES,
-                overflow = TextOverflow.Ellipsis
-            )
             Spacer(modifier = Modifier.height(SpacerMedium))
         }
     }
@@ -299,14 +279,14 @@ fun CharacterRow(
     Column {
         Row {
             CharacterEntry(
-                entry = entries[rowIndex * MAX_ELEMENTS_PER_ROW],
+                character = entries[rowIndex * MAX_ELEMENTS_PER_ROW],
                 navController = navController,
                 modifier = Modifier.weight(WEIGHT_DEFAULT)
             )
             Spacer(modifier = Modifier.width(SpacerMedium))
             if (entries.size >= rowIndex * MAX_ELEMENTS_PER_ROW + MAX_ELEMENTS_PER_ROW) {
                 CharacterEntry(
-                    entry = entries[rowIndex * MAX_ELEMENTS_PER_ROW + MIN_ELEMENTS_PER_ROW],
+                    character = entries[rowIndex * MAX_ELEMENTS_PER_ROW + MIN_ELEMENTS_PER_ROW],
                     navController = navController,
                     modifier = Modifier.weight(WEIGHT_DEFAULT)
                 )

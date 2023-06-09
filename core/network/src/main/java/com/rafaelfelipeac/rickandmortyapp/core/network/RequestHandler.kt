@@ -11,13 +11,13 @@ suspend fun <T : Any> handleRequest(
         val body = response.body()
 
         if (response.isSuccessful && body != null) {
-            Success(body)
+            Request.Success(body)
         } else {
-            Error(code = response.code(), message = response.message())
+            Request.Error(code = response.code(), message = response.message())
         }
     } catch (e: HttpException) {
-        Error(code = e.code(), message = e.message())
+        Request.Error(code = e.code(), message = e.message())
     } catch (e: Throwable) {
-        Exception(e)
+        Request.Exception(e)
     }
 }
