@@ -2,8 +2,8 @@ package com.rafaelfelipeac.rickandmortyapp.features.characterlist.data
 
 import com.rafaelfelipeac.rickandmortyapp.core.network.Request
 import com.rafaelfelipeac.rickandmortyapp.core.network.handleRequest
-import javax.inject.Inject
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.data.model.CharacterListResponse
+import javax.inject.Inject
 
 interface CharacterListRepository {
     suspend fun getCharacterList(page: Int): Request<CharacterListResponse>

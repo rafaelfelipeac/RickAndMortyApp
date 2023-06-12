@@ -12,9 +12,9 @@ import androidx.navigation.navArgument
 import com.rafaelfelipeac.rickandmortyapp.core.navigation.CHARACTER_DETAIL_ID
 import com.rafaelfelipeac.rickandmortyapp.core.navigation.CHARACTER_DETAIL_ROUTE
 import com.rafaelfelipeac.rickandmortyapp.core.navigation.CHARACTER_LIST_SCREEN
+import com.rafaelfelipeac.rickandmortyapp.core.theme.RickAndMortyAppTheme
 import com.rafaelfelipeac.rickandmortyapp.features.characterdetail.presentation.CharacterDetailScreen
 import com.rafaelfelipeac.rickandmortyapp.features.characterlist.presentation.CharacterListScreen
-import com.rafaelfelipeac.rickandmortyapp.core.theme.RickAndMortyAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

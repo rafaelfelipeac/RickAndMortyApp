@@ -76,7 +76,7 @@ const val DETAIL_TOP_FRACTION = 0.2f
 fun CharacterDetailScreen(
     characterId: Int,
     navController: NavController,
-    viewModel: CharacterDetailViewModel = hiltViewModel(),
+    viewModel: CharacterDetailViewModel = hiltViewModel()
 ) {
     viewModel.getCharacterDetail(characterId)
 
@@ -220,7 +220,7 @@ fun CharacterDetailStateWrapper(
 @Composable
 fun CharacterDetailSection(
     character: Character,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
     Column(

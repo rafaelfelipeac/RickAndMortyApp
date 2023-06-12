@@ -35,11 +35,11 @@ object CharacterDetailModule {
     @Singleton
     fun provideCharacterDetailRepository(
         service: CharacterDetailService
-    ) : CharacterDetailRepository = CharacterDetailRepositoryImpl(service)
+    ): CharacterDetailRepository = CharacterDetailRepositoryImpl(service)
 
     @Provides
     @Singleton
     fun provideCharacterDetailInteractor(
         repository: CharacterDetailRepository
-    ) : CharacterDetailInteractor = CharacterDetailInteractorImpl(repository)
+    ): CharacterDetailInteractor = CharacterDetailInteractorImpl(repository)
 }

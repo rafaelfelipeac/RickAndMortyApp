@@ -193,14 +193,13 @@ fun CharacterList(
             }
         }
     }
-
 }
 
 @Composable
 fun CharacterEntry(
     character: Character,
     navController: NavController,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Box(
         contentAlignment = Alignment.Center,

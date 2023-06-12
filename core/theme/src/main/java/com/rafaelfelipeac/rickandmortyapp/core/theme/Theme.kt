@@ -13,12 +13,12 @@ import androidx.core.view.WindowCompat
 
 private val DarkColorPalette = darkColors(
     primary = DarkGreen,
-    background = DarkGreen,
+    background = DarkGreen
 )
 
 private val LightColorPalette = lightColors(
     primary = DarkGreen,
-    background = LightGreen,
+    background = LightGreen
 )
 
 @Composable
