@@ -129,27 +129,32 @@ fun CharacterDetailScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            character?.image?.let {
-                SubcomposeAsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(it)
-                        .crossfade(true)
-                        .build(),
-                    loading = {
-                        CircularProgressIndicator(
-                            color = MaterialTheme.colors.primary,
-                            modifier = Modifier.scale(PROGRESS_BAR_SCALE)
-                        )
-                    },
-                    contentDescription = character?.name,
-                    modifier = Modifier
-                        .size(CHARACTER_IMAGE_SIZE.dp)
-                        .offset(y = TOP_PADDING.dp)
-                        .shadow(ShadowElevation, RoundedCornerShape(RoundedCorner))
-                        .clip(RoundedCornerShape(RoundedCorner))
-                )
-            }
+            CharacterImage(character)
         }
+    }
+}
+
+@Composable
+fun CharacterImage(character: Character?) {
+    character?.image?.let {
+        SubcomposeAsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(it)
+                .crossfade(true)
+                .build(),
+            loading = {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier.scale(PROGRESS_BAR_SCALE)
+                )
+            },
+            contentDescription = character.name,
+            modifier = Modifier
+                .size(CHARACTER_IMAGE_SIZE.dp)
+                .offset(y = TOP_PADDING.dp)
+                .shadow(ShadowElevation, RoundedCornerShape(RoundedCorner))
+                .clip(RoundedCornerShape(RoundedCorner))
+        )
     }
 }
 
@@ -230,105 +235,130 @@ fun CharacterDetailSection(
             .offset(y = CharacterDetailSectionOffset)
             .verticalScroll(scrollState)
     ) {
-        Text(
-            text = String.format(
-                stringResource(R.string.character_detail_name_format),
-                character.id,
-                character.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
-            ),
-            fontWeight = FontWeight.Bold,
-            fontSize = FontDetailLarge,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colors.onSurface
-        )
+        CharacterDetailName(character)
         Spacer(modifier = Modifier.height(SpacerSmall))
-        Row {
-            Box(
-                modifier = Modifier
-                    .padding(PaddingMedium, PaddingSmall, Zero, Zero)
-                    .size(CharacterStatusSize)
-                    .clip(CircleShape)
-                    .background(character.status.getStatusColor())
-            )
-            Text(
-                text = stringResource(R.string.character_detail_status),
-                fontWeight = FontWeight.Bold,
-                fontSize = FontMedium,
-                textAlign = TextAlign.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = PaddingMedium)
-            )
-        }
-        Text(
-            text = character.status,
-            fontSize = FontLarge,
-            textAlign = TextAlign.Start,
+        CharacterDetailStatus(character)
+        Spacer(modifier = Modifier.height(SpacerSmall))
+        CharacterDetailSpecies(character)
+        Spacer(modifier = Modifier.height(SpacerSmall))
+        CharacterDetailLastKnowLocation(character)
+        Spacer(modifier = Modifier.height(SpacerSmall))
+        CharacterDetailEpisodes(character)
+    }
+}
+
+@Composable
+private fun CharacterDetailName(character: Character) {
+    Text(
+        text = String.format(
+            stringResource(R.string.character_detail_name_format),
+            character.id,
+            character.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+        ),
+        fontWeight = FontWeight.Bold,
+        fontSize = FontDetailLarge,
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colors.onSurface
+    )
+}
+
+@Composable
+private fun CharacterDetailStatus(character: Character) {
+    Row {
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium),
-            maxLines = MAX_LINES,
-            overflow = TextOverflow.Ellipsis
+                .padding(PaddingMedium, PaddingSmall, Zero, Zero)
+                .size(CharacterStatusSize)
+                .clip(CircleShape)
+                .background(character.status.getStatusColor())
         )
-        Spacer(modifier = Modifier.height(SpacerSmall))
         Text(
-            text = stringResource(R.string.character_detail_species),
+            text = stringResource(R.string.character_detail_status),
             fontWeight = FontWeight.Bold,
             fontSize = FontMedium,
             textAlign = TextAlign.Start,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = PaddingMedium)
-        )
-        Text(
-            text = character.species,
-            fontSize = FontLarge,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium),
-            maxLines = MAX_LINES,
-            overflow = TextOverflow.Ellipsis
-        )
-        Spacer(modifier = Modifier.height(SpacerSmall))
-        Text(
-            text = stringResource(R.string.character_detail_last_know_location),
-            fontWeight = FontWeight.Bold,
-            fontSize = FontMedium,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium)
-        )
-        Text(
-            text = character.location.name,
-            fontSize = FontLarge,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium),
-            maxLines = MAX_LINES,
-            overflow = TextOverflow.Ellipsis
-        )
-        Spacer(modifier = Modifier.height(SpacerSmall))
-        Text(
-            text = stringResource(R.string.character_detail_episodes),
-            fontWeight = FontWeight.Bold,
-            fontSize = FontMedium,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium)
-        )
-        Text(
-            text = character.episode.size.toString(),
-            fontSize = FontLarge,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium),
-            maxLines = MAX_LINES,
-            overflow = TextOverflow.Ellipsis
         )
     }
+    Text(
+        text = character.status,
+        fontSize = FontLarge,
+        textAlign = TextAlign.Start,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = PaddingMedium),
+        maxLines = MAX_LINES,
+        overflow = TextOverflow.Ellipsis
+    )
+}
+
+@Composable
+private fun CharacterDetailSpecies(character: Character) {
+    Text(
+        text = stringResource(R.string.character_detail_species),
+        fontWeight = FontWeight.Bold,
+        fontSize = FontMedium,
+        textAlign = TextAlign.Start,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = PaddingMedium)
+    )
+    Text(
+        text = character.species,
+        fontSize = FontLarge,
+        textAlign = TextAlign.Start,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = PaddingMedium),
+        maxLines = MAX_LINES,
+        overflow = TextOverflow.Ellipsis
+    )
+}
+
+@Composable
+private fun CharacterDetailLastKnowLocation(character: Character) {
+    Text(
+        text = stringResource(R.string.character_detail_last_know_location),
+        fontWeight = FontWeight.Bold,
+        fontSize = FontMedium,
+        textAlign = TextAlign.Start,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = PaddingMedium)
+    )
+    Text(
+        text = character.location.name,
+        fontSize = FontLarge,
+        textAlign = TextAlign.Start,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = PaddingMedium),
+        maxLines = MAX_LINES,
+        overflow = TextOverflow.Ellipsis
+    )
+}
+
+@Composable
+private fun CharacterDetailEpisodes(character: Character) {
+    Text(
+        text = stringResource(R.string.character_detail_episodes),
+        fontWeight = FontWeight.Bold,
+        fontSize = FontMedium,
+        textAlign = TextAlign.Start,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = PaddingMedium)
+    )
+    Text(
+        text = character.episode.size.toString(),
+        fontSize = FontLarge,
+        textAlign = TextAlign.Start,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = PaddingMedium),
+        maxLines = MAX_LINES,
+        overflow = TextOverflow.Ellipsis
+    )
 }

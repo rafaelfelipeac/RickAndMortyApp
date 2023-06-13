@@ -173,7 +173,8 @@ fun CharacterList(
         }
 
         items(itemCount) {
-            if (it >= itemCount - ITEM_OFFSET && !endReached && !isLoading && !isSearching) {
+            val validStates = !endReached && !isLoading && !isSearching
+            if (it >= itemCount - ITEM_OFFSET && validStates) {
                 viewModel.loadCharacters()
             }
             CharacterRow(rowIndex = it, entries = characterList, navController = navController)
@@ -240,31 +241,38 @@ fun CharacterEntry(
                 maxLines = MAX_LINES,
                 overflow = TextOverflow.Ellipsis
             )
-            Row {
-                Box(
-                    modifier = Modifier
-                        .padding(PaddingMedium, PaddingSmall, Zero, Zero)
-                        .size(CharacterStatusSize)
-                        .clip(CircleShape)
-                        .background(character.status.getStatusColor())
-                )
-                Text(
-                    text = String.format(
-                        stringResource(R.string.character_list_status_format),
-                        character.status,
-                        character.species
-                    ),
-                    fontSize = FontMedium,
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = PaddingMedium),
-                    maxLines = MAX_LINES,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
+            CharacterStatus(character)
             Spacer(modifier = Modifier.height(SpacerMedium))
         }
+    }
+}
+
+@Composable
+fun CharacterStatus(
+    character: Character
+) {
+    Row {
+        Box(
+            modifier = Modifier
+                .padding(PaddingMedium, PaddingSmall, Zero, Zero)
+                .size(CharacterStatusSize)
+                .clip(CircleShape)
+                .background(character.status.getStatusColor())
+        )
+        Text(
+            text = String.format(
+                stringResource(R.string.character_list_status_format),
+                character.status,
+                character.species
+            ),
+            fontSize = FontMedium,
+            textAlign = TextAlign.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = PaddingMedium),
+            maxLines = MAX_LINES,
+            overflow = TextOverflow.Ellipsis
+        )
     }
 }
 

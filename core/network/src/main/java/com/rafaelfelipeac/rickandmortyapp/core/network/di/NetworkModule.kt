@@ -13,10 +13,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    private const val BASE_URL = "https://rickandmortyapi.com/api/"
+
     @Provides
     @Singleton
     @Named("BaseUrl")
-    fun providesBaseUrl() = "https://rickandmortyapi.com/api/"
+    fun providesBaseUrl() = BASE_URL
 
     @Provides
     @Singleton

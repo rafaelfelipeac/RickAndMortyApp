@@ -20,7 +20,7 @@ val RoundedCorner = 10.dp
 val ShadowElevation = 5.dp
 
 val CharacterImageHeight = 200.dp
-val CharacterImageOffset = (-10).dp
+val CharacterImageOffset = -10.dp
 
 val CharacterStatusSize = 12.dp
 
