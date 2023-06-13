@@ -6,9 +6,11 @@ Developed with:
 ------- 
 - Kotlin;  
 - MVVM;
-- Coroutines;
 - Jetpack Compose;
+- Modularization;
+- Coroutines;
 - Dagger-Hilt;
-- ViewModel;
+- Retrofit;
+- Coil;
 - Detekt;
 - Ktlint;
