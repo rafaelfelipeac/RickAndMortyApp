@@ -10,3 +10,5 @@ Developed with:
 - Jetpack Compose;
 - Dagger-Hilt;
 - ViewModel;
+- Detekt;
+- Ktlint;
